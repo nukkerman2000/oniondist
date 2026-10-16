@@ -1,0 +1,18 @@
+# build output
+build/
+*.o
+*.obj
+*.so
+*.dll
+*.exe
+
+# generated hidden-service keys
+keys/
+
+# coordinator state
+*.db
+*.db-journal
+
+# python
+__pycache__/
+*.pyc
