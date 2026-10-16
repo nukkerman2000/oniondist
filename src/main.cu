@@ -344,12 +344,14 @@ int main(int argc, char** argv)
             "-d N       use CUDA device with index N (repeatable, counting from 0)\n\n"
             "-t N       number of CPU worker threads (default: all cores)\n\n"
             "-m GB      CPU memory budget in GiB for candidate buffers (default: most of free RAM)\n\n"
+            "--keys DIR output directory for ready-to-use hidden service folders (default: keys)\n\n"
             "GPU batch size is sized automatically to fill the free VRAM of any card.\n"
             "CPU workers run in parallel with the GPU by default.\n\n"
             "Each pattern can have \"?\" symbols which match any character.\nOnly these characters are allowed:\n\n"
             " abcdefghijklmnopqrstuvwxyz234567\n\n"
             "Example:\n\t./vanity_torv3_cuda -i P?XXXXX L23456 b55555\n\n"
-            "Matches print the tor secret key (hex) as they are found.\n"
+            "Each match prints its full .onion address and secret key, and is saved under\n"
+            "--keys DIR as a ready-to-use hidden service folder.\n"
         );
         return 0;
     }
