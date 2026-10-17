@@ -23,6 +23,7 @@ struct Url {
   std::string host;
   int port = 80;
   std::string base;   // e.g. "" or "/oniondist"
+  std::string token;  // optional Bearer token for the coordinator
 };
 
 inline bool parse_url(const std::string& url, Url& out) {
@@ -72,6 +73,7 @@ inline std::string http_request(const Url& u, const std::string& method,
   req += "Host: " + u.host + "\r\n";
   req += "User-Agent: oniondist-client\r\n";
   req += "Connection: close\r\n";
+  if (!u.token.empty()) req += "Authorization: Bearer " + u.token + "\r\n";
   if (method == "POST") {
     req += "Content-Type: application/json\r\n";
     req += "Content-Length: " + std::to_string(body.size()) + "\r\n";

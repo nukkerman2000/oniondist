@@ -67,7 +67,7 @@ int main(int argc, char** argv) {
   int threads = (int)std::thread::hardware_concurrency();
   if (threads <= 0) threads = 1;
   bool rate = false;
-  std::string server, name, kind = "cpu";
+  std::string server, name, kind = "cpu", token;
   std::vector<std::string> cli_patterns;
 
   for (int i = 1; i < argc; ++i) {
@@ -75,6 +75,7 @@ int main(int argc, char** argv) {
     if (a == "--server" && i + 1 < argc) { server = argv[++i]; continue; }
     if (a == "--name" && i + 1 < argc) { name = argv[++i]; continue; }
     if (a == "--keys" && i + 1 < argc) { g_keys_root = argv[++i]; continue; }
+    if (a == "--token" && i + 1 < argc) { token = argv[++i]; continue; }
     if (a == "-t" && i + 1 < argc) { threads = atoi(argv[++i]); continue; }
     if (a == "-i") { rate = true; continue; }
     cli_patterns.push_back(a);
@@ -101,7 +102,7 @@ int main(int argc, char** argv) {
     std::fprintf(stderr,
       "Usage:\n"
       "  local       : %s [-t N] [-i] pattern [pattern...]\n"
-      "  distributed : %s --server http://host:port --name NAME [-t N]\n",
+      "  distributed : %s --server http://host:port --name NAME [--token TOKEN] [-t N]\n",
       argv[0], argv[0]);
     return 1;
   }
@@ -160,6 +161,7 @@ int main(int argc, char** argv) {
   }
   coord.name = name;
   coord.kind = kind;
+  coord.url.token = token;
 
   uint64_t chunks = 0;
   auto t1 = std::chrono::high_resolution_clock::now();

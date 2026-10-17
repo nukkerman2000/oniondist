@@ -44,7 +44,7 @@ static const char* g_keys_root = "keys";
     } while(0)
 
 int main(int argc, char** argv) {
-    std::string server, name = "gpu";
+    std::string server, name = "gpu", token;
     int dev = 0;
     bool rate_info = false;
     size_t batch_cap = 0;
@@ -56,12 +56,13 @@ int main(int argc, char** argv) {
         if (a == "-d" && i + 1 < argc) { dev = atoi(argv[++i]); continue; }
         if (a == "-b" && i + 1 < argc) { batch_cap = strtoull(argv[++i], nullptr, 10); continue; }
         if (a == "--keys" && i + 1 < argc) { g_keys_root = argv[++i]; continue; }
+        if (a == "--token" && i + 1 < argc) { token = argv[++i]; continue; }
         if (a == "-i") { rate_info = true; continue; }
         std::fprintf(stderr, "Unknown argument: %s\n", a.c_str());
     }
     if (server.empty()) {
         std::fprintf(stderr,
-            "Usage: %s --server http://host:port [--name NAME] [-d 0] [-b MAXBATCH] [-i]\n",
+            "Usage: %s --server http://host:port [--name NAME] [--token TOKEN] [-d 0] [-b MAXBATCH] [-i]\n",
             argv[0]);
         return 1;
     }
@@ -73,6 +74,7 @@ int main(int argc, char** argv) {
     }
     coord.name = name;
     coord.kind = "gpu";
+    coord.url.token = token;
 
     int device_count = 0;
     if (cudaGetDeviceCount(&device_count) != cudaSuccess || device_count == 0) {

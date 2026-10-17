@@ -1,0 +1,17 @@
+{
+  "host": "0.0.0.0",
+  "port": 8090,
+  "db": "oniondist.db",
+  "keys": "keys",
+  "expand": 10,
+
+  "token": "CHANGE-ME-agent-shared-secret",
+  "admin_token": "CHANGE-ME-admin-secret",
+
+  "chunks": {
+    "mode": "auto",
+    "base": 65536,
+    "weights": { "gpu": 1024, "cpu": 1 },
+    "manual": { "gpu": 67108864, "cpu": 65536 }
+  }
+}

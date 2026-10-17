@@ -16,3 +16,7 @@ keys/
 # python
 __pycache__/
 *.pyc
+
+# local server config (contains secrets); keep config.example.json
+server/config.json
+config.json
